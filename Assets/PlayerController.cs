@@ -30,10 +30,7 @@ public class PlayerController : MonoBehaviour
              // code to make bouncy: 
            //  rb.AddForce(new Vector2(0, 300));
         }
-        // if (collision.gameObject.CompareTag("Ground"))
-        // {
-        //     Debug.Log("i am on  the ground.");
-        // }
+
     }
 
     // Update is called once per frame
@@ -46,23 +43,25 @@ public class PlayerController : MonoBehaviour
     {
         // make new variable of type vector2 and its set to the value u get from pressing the key ?
         movementVector = value.Get<Vector2>();
+        Debug.Log(speed);
 
-        Debug.Log(movementVector);
     }
 
     void OnJump(InputValue value)
     {
-        if(canJump){
-            Debug.Log("space");
+        if(canJump)
+        {
             rb.AddForce(new Vector2(0, 300));
             canJump = false;
         }
-        // if (collision.gameObject.CompareTag("Platforms") || collision.gameObject.CompareTag("Ground"))
-        // {
-        //     Debug.Log("space");
-        //     rb.AddForce(new Vector2(0, 300));
-        // }
 
     }
+
+    void OnRun(InputValue value)
+    {
+        speed+=1;
+    }
+
+
 
 }
