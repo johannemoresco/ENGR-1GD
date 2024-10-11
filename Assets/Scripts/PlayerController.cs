@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
     private Vector2 movementVector;
+    [SerializeField] Animator animator;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
 
 // serializefield allows us to access speed and change it within the game ??? if i heard right
-    [SerializeField] int speed = 0;
+    [SerializeField] int walk = 3;
+    [SerializeField] int run = 6;
     private bool canJump = false;
-
+    private int speed; 
+    private int score;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = walk; 
+        sr = GetComponent<SpriteRenderer>();
     }
 
 // calls rigidbody of the player and adds force to the body that goes up
@@ -43,7 +50,13 @@ public class PlayerController : MonoBehaviour
     {
         // make new variable of type vector2 and its set to the value u get from pressing the key ?
         movementVector = value.Get<Vector2>();
-        Debug.Log(speed);
+
+      
+        animator.SetBool("Walk_Right", !Mathf.Approximately(movementVector.x,0));
+        if(!Mathf.Approximately(movementVector.x, 0))
+        {
+            sr.flipX = movementVector.x < 0;
+        }
 
     }
 
@@ -56,12 +69,27 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+// need work
     void OnRun(InputValue value)
     {
-        speed+=1;
+        if (value.isPressed) 
+        {
+            speed = run;
+        }
+        else
+        {
+            speed = walk;
+        }
     }
 
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Collectable"))
+        {
+            other.gameObject.SetActive(false);
+            score++;
+            Debug.Log("My score is:" + score); 
+        }
+    }
 
 }
