@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
 // serializefield allows us to access speed and change it within the game ??? if i heard right
     [SerializeField] int walk = 3;
     [SerializeField] int run = 6;
+
+    [SerializeField] AudioSource SFXSource;
+    [SerializeField] AudioSource jumpClip;
     private bool canJump = false;
     private int speed; 
     private int score;
@@ -65,6 +68,7 @@ public class PlayerController : MonoBehaviour
         if(canJump)
         {
             rb.AddForce(new Vector2(0, 300));
+            SFXSource.Play();
             canJump = false;
         }
 
