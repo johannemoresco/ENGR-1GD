@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator animator;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+
+    [SerializeField] AudioMixerSnapshot loudMusicSnapshot;
 
 // serializefield allows us to access speed and change it within the game ??? if i heard right
     [SerializeField] int walk = 3;
@@ -72,6 +75,11 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
 
+    }
+
+    public void StartLoudMusic()
+    {
+        loudMusicSnapshot.TransitionTo(2.0f);
     }
 // need work
     void OnRun(InputValue value)
